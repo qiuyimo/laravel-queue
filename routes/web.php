@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/queue', function () {
+    \App\User::all()->each(function ($user) {
+        \App\Jobs\SendEmail::dispatch($user);
+    });
+
+    return 'ok';
+});
